@@ -1,5 +1,4 @@
 import React from 'react';
-import { ItemNavigation } from './ItemNavigation';
 import {
   AssignmentIndRounded,
   AssignmentLateRounded,
@@ -8,6 +7,8 @@ import {
   DashboardRounded,
   ExitToAppRounded,
 } from '@material-ui/icons';
+
+import { ItemNavigation } from './ItemNavigation';
 
 export const ListItemNavigation = (
   <div>
