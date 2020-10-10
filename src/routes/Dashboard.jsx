@@ -142,7 +142,7 @@ export default function Dashboard() {
             noWrap
             className={classes.title}
           >
-            Realizar Inscripción
+            Inscripciones
           </Typography>
         </Toolbar>
       </AppBar>
