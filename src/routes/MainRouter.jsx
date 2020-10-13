@@ -5,20 +5,24 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import Dashboard from './Dashboard';
+import { store } from '../store';
 
 export const MainRouter = () => {
   return (
-    <Router>
-      <div>
-        <Switch>
-          {/* <Route exact path='/auth/login' component={} /> */}
-          <Route path='/dashboard' component={Dashboard} />
+    <Provider store={store}>
+      <Router>
+        <div>
+          <Switch>
+            {/* <Route exact path='/auth/login' component={} /> */}
+            <Route path='/dashboard' component={Dashboard} />
 
-          <Redirect to='/dashboard' />
-        </Switch>
-      </div>
-    </Router>
+            <Redirect to='/dashboard' />
+          </Switch>
+        </div>
+      </Router>
+    </Provider>
   );
 };
