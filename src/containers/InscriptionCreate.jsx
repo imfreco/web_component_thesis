@@ -20,6 +20,7 @@ import {
   startSisbensLoaded,
 } from '../actions/inscription.action';
 import { useForm } from '../hooks/useForm';
+import Swal from 'sweetalert2';
 
 export const InscriptionCreate = () => {
   const classes = useStyles();
@@ -33,7 +34,7 @@ export const InscriptionCreate = () => {
     dispatch(startAveragesLoaded());
     dispatch(startSisbensLoaded());
     dispatch(startPopulationsLoaded());
-    dispatch(setTitleNavbar('Realizar Inscription'));
+    dispatch(setTitleNavbar('Realizar Inscripción'));
   }, [dispatch]);
 
   const [formValues, handleChange] = useForm({
@@ -44,10 +45,15 @@ export const InscriptionCreate = () => {
 
   const { sisbenId, averageId, populationId } = formValues;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formValues);
-    dispatch(startInscriptionCreate(formValues));
+    const { value } = await Swal.fire({
+      title: 'Responder',
+      text: '¿Acepta realizar la inscripción?',
+      showConfirmButton: true,
+      showCancelButton: true,
+    });
+    if (value) dispatch(startInscriptionCreate(formValues));
   };
 
   return (
