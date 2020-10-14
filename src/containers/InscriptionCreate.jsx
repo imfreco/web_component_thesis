@@ -37,9 +37,9 @@ export const InscriptionCreate = () => {
   }, [dispatch]);
 
   const [formValues, handleChange] = useForm({
-    sisbenId: 1,
-    averageId: 1,
-    populationId: 1,
+    sisbenId: 0,
+    averageId: 0,
+    populationId: 0,
   });
 
   const { sisbenId, averageId, populationId } = formValues;
@@ -66,9 +66,12 @@ export const InscriptionCreate = () => {
                 value={sisbenId}
                 onChange={handleChange}
               >
-                {sisbens.map((sisben) => (
-                  <MenuItem key={sisben.id} value={sisben.id}>
-                    {sisben.value}
+                <MenuItem key={0} value={0}>
+                  Seleccionar...
+                </MenuItem>
+                {sisbens.map(({ id, value }) => (
+                  <MenuItem key={id} value={id}>
+                    {value}
                   </MenuItem>
                 ))}
               </Select>
@@ -86,9 +89,12 @@ export const InscriptionCreate = () => {
                 value={averageId}
                 onChange={handleChange}
               >
-                {averages.map((average) => (
-                  <MenuItem key={average.id} value={average.id}>
-                    {average.value}
+                <MenuItem key={0} value={0}>
+                  Seleccionar...
+                </MenuItem>
+                {averages.map(({ id, value }) => (
+                  <MenuItem key={id} value={id}>
+                    {value}
                   </MenuItem>
                 ))}
               </Select>
@@ -106,9 +112,12 @@ export const InscriptionCreate = () => {
                 value={populationId}
                 onChange={handleChange}
               >
-                {populations.map((population) => (
-                  <MenuItem key={population.id} value={population.id}>
-                    {population.value}
+                <MenuItem key={0} value={0}>
+                  Seleccionar...
+                </MenuItem>
+                {populations.map(({ id, value }) => (
+                  <MenuItem key={id} value={id}>
+                    {value}
                   </MenuItem>
                 ))}
               </Select>
