@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import { MenuRounded, ChevronLeft } from '@material-ui/icons';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { ListItemNavigation } from '../components/ListItemNavigation';
 import { InscriptionCreate } from '../containers/InscriptionCreate';
@@ -106,8 +107,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
   const classes = useStyles();
 
+  const { titleNavbar } = useSelector((state) => state.uiReducer);
+
   const { path } = useRouteMatch();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -142,7 +145,7 @@ export default function Dashboard() {
             noWrap
             className={classes.title}
           >
-            Inscripciones
+            {titleNavbar}
           </Typography>
         </Toolbar>
       </AppBar>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Button,
   FormControl,
@@ -10,6 +10,9 @@ import {
   Select,
 } from '@material-ui/core';
 import { CheckCircleRounded } from '@material-ui/icons';
+import { useDispatch } from 'react-redux';
+
+import { setTitleNavbar } from '../actions/ui.action';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -45,6 +48,12 @@ const useStyles = makeStyles((theme) => ({
 
 export const InscriptionCreate = () => {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setTitleNavbar('Realizar Inscription'));
+  }, [dispatch]);
 
   return (
     <main className={classes.layout}>

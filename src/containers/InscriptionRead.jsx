@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   makeStyles,
   Paper,
@@ -10,6 +10,9 @@ import {
   TableRow,
   withStyles,
 } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+
+import { setTitleNavbar } from '../actions/ui.action';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -52,6 +55,12 @@ const rows = [
 
 export const InscriptionRead = () => {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setTitleNavbar('Inscripciones'));
+  }, [dispatch]);
 
   return (
     <main className={classes.layout}>

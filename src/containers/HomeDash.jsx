@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RestaurantMenuRounded } from '@material-ui/icons';
 import { makeStyles, Typography } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { setTitleNavbar } from '../actions/ui.action';
 
 const useStyles = makeStyles((theme) => ({
   iconHomeDashboard: {
@@ -8,8 +10,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const HomeDash = () => {
+export const HomeDash = (props) => {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setTitleNavbar('Principal'));
+  }, [dispatch]);
 
   return (
     <>
