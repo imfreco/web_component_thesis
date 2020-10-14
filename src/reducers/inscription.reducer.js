@@ -24,6 +24,11 @@ export const inscriptionReducer = (state = initialState, action) => {
         ...state,
         populations: [...action.payload],
       };
+    case types.inscriptionCreate:
+      return {
+        ...state,
+        inscriptions: [...state.inscriptions, action.payload],
+      };
     default:
       return state;
   }

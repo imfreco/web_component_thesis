@@ -4,4 +4,5 @@ export const types = {
   inscriptionAveragesLoaded: '[Inscription] Averages Loaded',
   inscriptionSisbensLoaded: '[Inscription] Sisbens Loaded',
   inscriptionPopulationsLoaded: '[Inscription] Populations Loaded',
+  inscriptionCreate: '[Inscription] Inscription Create',
 };

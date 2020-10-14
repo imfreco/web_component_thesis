@@ -15,6 +15,7 @@ import { useStyles } from '../hooks/styles/InscriptionCreate';
 import { setTitleNavbar } from '../actions/ui.action';
 import {
   startAveragesLoaded,
+  startInscriptionCreate,
   startPopulationsLoaded,
   startSisbensLoaded,
 } from '../actions/inscription.action';
@@ -36,16 +37,22 @@ export const InscriptionCreate = () => {
   }, [dispatch]);
 
   const [formValues, handleChange] = useForm({
-    sisbenId: 0,
-    averageId: 0,
-    populationId: 0,
+    sisbenId: 1,
+    averageId: 1,
+    populationId: 1,
   });
 
   const { sisbenId, averageId, populationId } = formValues;
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formValues);
+    dispatch(startInscriptionCreate(formValues));
+  };
+
   return (
     <main className={classes.layout}>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} component='form' onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <FormControl variant='filled' className={classes.formControl}>
