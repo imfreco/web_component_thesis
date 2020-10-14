@@ -9,19 +9,39 @@ import {
   Select,
 } from '@material-ui/core';
 import { CheckCircleRounded } from '@material-ui/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { setTitleNavbar } from '../actions/ui.action';
 import { useStyles } from '../hooks/styles/InscriptionCreate';
+import { setTitleNavbar } from '../actions/ui.action';
+import {
+  startAveragesLoaded,
+  startPopulationsLoaded,
+  startSisbensLoaded,
+} from '../actions/inscription.action';
+import { useForm } from '../hooks/useForm';
 
 export const InscriptionCreate = () => {
   const classes = useStyles();
 
+  const { averages, sisbens, populations } = useSelector(
+    (state) => state.inscriptionReducer
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(startAveragesLoaded());
+    dispatch(startSisbensLoaded());
+    dispatch(startPopulationsLoaded());
     dispatch(setTitleNavbar('Realizar Inscription'));
   }, [dispatch]);
+
+  const [formValues, handleChange] = useForm({
+    sisbenId: 0,
+    averageId: 0,
+    populationId: 0,
+  });
+
+  const { sisbenId, averageId, populationId } = formValues;
 
   return (
     <main className={classes.layout}>
@@ -35,13 +55,15 @@ export const InscriptionCreate = () => {
               <Select
                 labelId='demo-simple-select-filled-label'
                 id='demo-simple-select-filled'
-                // value={}
-                // onChange={}
+                name='sisbenId'
+                value={sisbenId}
+                onChange={handleChange}
               >
-                <MenuItem>0 - 15</MenuItem>
-                <MenuItem>15.01 - 20</MenuItem>
-                <MenuItem>20.01 - 30</MenuItem>
-                <MenuItem>+30</MenuItem>
+                {sisbens.map((sisben) => (
+                  <MenuItem key={sisben.id} value={sisben.id}>
+                    {sisben.value}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
@@ -53,13 +75,15 @@ export const InscriptionCreate = () => {
               <Select
                 labelId='demo-simple-select-filled-label'
                 id='demo-simple-select-filled'
-                // value={}
-                // onChange={}
+                name='averageId'
+                value={averageId}
+                onChange={handleChange}
               >
-                <MenuItem>3.8 - 4.2</MenuItem>
-                <MenuItem>4.3 - 4.7</MenuItem>
-                <MenuItem>3 - 3.7</MenuItem>
-                <MenuItem>4.8 - 5</MenuItem>
+                {averages.map((average) => (
+                  <MenuItem key={average.id} value={average.id}>
+                    {average.value}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
@@ -71,28 +95,15 @@ export const InscriptionCreate = () => {
               <Select
                 labelId='demo-simple-select-filled-label'
                 id='demo-simple-select-filled'
-                // value={}
-                // onChange={}
+                name='populationId'
+                value={populationId}
+                onChange={handleChange}
               >
-                <MenuItem>Si</MenuItem>
-                <MenuItem>No</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl variant='filled' className={classes.formControl}>
-              <InputLabel id='demo-simple-select-filled-label'>
-                Distancia
-              </InputLabel>
-              <Select
-                labelId='demo-simple-select-filled-label'
-                id='demo-simple-select-filled'
-                // value={}
-                // onChange={}
-              >
-                <MenuItem>0 - 1 km</MenuItem>
-                <MenuItem>1 - 2 km</MenuItem>
-                <MenuItem>+2 km</MenuItem>
+                {populations.map((population) => (
+                  <MenuItem key={population.id} value={population.id}>
+                    {population.value}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
