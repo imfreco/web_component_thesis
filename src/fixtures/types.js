@@ -6,4 +6,5 @@ export const types = {
   inscriptionPopulationsLoaded: '[Inscription] Populations Loaded',
   inscriptionCreate: '[Inscription] Inscription Create',
   inscriptionsReaded: '[Incription] Inscriptions Readed',
+  inscriptionAdmitted: '[Incription] Inscription Admitted',
 };

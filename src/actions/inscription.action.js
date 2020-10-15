@@ -127,3 +127,33 @@ export const startInscriptionsReadMe = () => {
     }
   };
 };
+
+export const startInscriptionAdmit = (inscriptionId) => {
+  return async (dispatch) => {
+    try {
+      const res = await fetchWithoutToken(
+        `inscription/admit/${inscriptionId}`,
+        { state: 1 },
+        'PATCH'
+      );
+      const inscription = await res.json();
+
+      if (inscription.status) {
+        Swal.fire({
+          title: 'Error',
+          text: inscription.message,
+          icon: 'error',
+        });
+      } else {
+        dispatch(inscriptionAdmitted(inscriptionId));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+const inscriptionAdmitted = (inscriptionId) => ({
+  type: types.inscriptionAdmitted,
+  payload: inscriptionId,
+});

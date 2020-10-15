@@ -13,8 +13,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { StyledTableCell, useStyles } from '../hooks/styles/InscriptionRead';
 import { setTitleNavbar } from '../actions/ui.action';
-import { startInscriptionsRead } from '../actions/inscription.action';
+import {
+  startInscriptionAdmit,
+  startInscriptionsRead,
+} from '../actions/inscription.action';
 import { AssignmentTurnedInRounded } from '@material-ui/icons';
+import Swal from 'sweetalert2';
 
 export const InscriptionRead = () => {
   const classes = useStyles();
@@ -27,8 +31,14 @@ export const InscriptionRead = () => {
     dispatch(startInscriptionsRead());
   }, [dispatch]);
 
-  const handleClick = () => {
-    console.log('Admitiendo...');
+  const handleAdmit = async (inscriptionId) => {
+    const { value } = await Swal.fire({
+      title: 'Responder',
+      text: '¿Está de acuerdo en admitir esta inscripción?',
+      showCancelButton: true,
+      showConfirmButton: true,
+    });
+    if (value) dispatch(startInscriptionAdmit(inscriptionId));
   };
 
   return (
@@ -49,14 +59,23 @@ export const InscriptionRead = () => {
           <TableBody>
             {inscriptions.map(({ id, createdAt, state }) => (
               <TableRow key={id}>
-                <TableCell>{`${new Date(createdAt).getFullYear()}-${
+                <TableCell className={classes.centerContent}>{`${new Date(
+                  createdAt
+                ).getFullYear()}-${
                   new Date(createdAt).getMonth() + 1
                 }-${new Date(createdAt).getDate()}`}</TableCell>
-                <TableCell>{state ? 'ADMITIDO' : 'INSCRITO'}</TableCell>
-                <TableCell>
-                  <IconButton aria-label='admitir' onClick={handleClick}>
-                    <AssignmentTurnedInRounded />
-                  </IconButton>
+                <TableCell className={classes.centerContent}>
+                  {state ? 'ADMITIDO' : 'INSCRITO'}
+                </TableCell>
+                <TableCell className={classes.centerContent}>
+                  {!state && (
+                    <IconButton
+                      aria-label='admitir'
+                      onClick={() => handleAdmit(id)}
+                    >
+                      <AssignmentTurnedInRounded />
+                    </IconButton>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

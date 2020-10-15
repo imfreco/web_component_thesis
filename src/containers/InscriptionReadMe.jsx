@@ -53,11 +53,15 @@ export const InscriptionReadMe = () => {
           <TableBody>
             {inscriptions.map(({ id, createdAt, state }) => (
               <TableRow key={id}>
-                <TableCell>{`${new Date(createdAt).getFullYear()}-${
+                <TableCell className={classes.centerContent}>{`${new Date(
+                  createdAt
+                ).getFullYear()}-${
                   new Date(createdAt).getMonth() + 1
                 }-${new Date(createdAt).getDate()}`}</TableCell>
-                <TableCell>{state ? 'ADMITIDO' : 'INSCRITO'}</TableCell>
-                <TableCell>
+                <TableCell className={classes.centerContent}>
+                  {state ? 'ADMITIDO' : 'INSCRITO'}
+                </TableCell>
+                <TableCell className={classes.centerContent}>
                   <IconButton aria-label='eliminar' onClick={handleDelete}>
                     <DeleteRounded />
                   </IconButton>

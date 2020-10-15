@@ -34,6 +34,16 @@ export const inscriptionReducer = (state = initialState, action) => {
         ...state,
         inscriptions: action.payload,
       };
+    case types.inscriptionAdmitted:
+      return {
+        ...state,
+        inscriptions: state.inscriptions.map((inscription) => {
+          if (inscription.id === action.payload) {
+            inscription.state = 1;
+          }
+          return inscription;
+        }),
+      };
     default:
       return state;
   }

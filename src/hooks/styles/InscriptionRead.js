@@ -17,6 +17,9 @@ export const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
   },
+  centerContent: {
+    textAlign: 'center',
+  },
 }));
 
 export const StyledTableCell = withStyles((theme) => ({
@@ -24,5 +27,6 @@ export const StyledTableCell = withStyles((theme) => ({
     backgroundColor: '#3c3c3c',
     color: '#fff',
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 }))(TableCell);
