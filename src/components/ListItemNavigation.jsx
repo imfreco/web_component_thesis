@@ -1,9 +1,7 @@
 import React from 'react';
 import {
   AssignmentIndRounded,
-  AssignmentLateRounded,
   AssignmentRounded,
-  AssignmentTurnedInRounded,
   DashboardRounded,
   ExitToAppRounded,
 } from '@material-ui/icons';
@@ -23,19 +21,14 @@ export const ListItemNavigation = (
       IconComponent={AssignmentIndRounded}
     />
     <ItemNavigation
-      tag='Cancelar Inscripción'
-      path='/dashboard/inscription/delete'
-      IconComponent={AssignmentLateRounded}
+      tag='Mis Inscripciones'
+      path='/dashboard/inscription/readme'
+      IconComponent={AssignmentRounded}
     />
     <ItemNavigation
       tag='Inscripciones'
       path='/dashboard/inscription/read'
       IconComponent={AssignmentRounded}
-    />
-    <ItemNavigation
-      tag='Admitir Plaza'
-      path='/dashboard/inscription/accept'
-      IconComponent={AssignmentTurnedInRounded}
     />
     <ItemNavigation
       tag='Cerrar Sesión'

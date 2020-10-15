@@ -104,3 +104,26 @@ const inscriptionsReaded = (inscriptions) => ({
   type: types.inscriptionsReaded,
   payload: inscriptions,
 });
+
+export const startInscriptionsReadMe = () => {
+  return async (dispatch) => {
+    try {
+      const userId = 1;
+      // TODO: refactorizar cuando se implemente la autenticación
+      const res = await fetchWithoutToken(`inscription/${userId}`);
+      const inscriptions = await res.json();
+
+      if (inscriptions.status) {
+        Swal.fire({
+          title: 'Error',
+          text: inscriptions.message,
+          icon: 'error',
+        });
+      } else {
+        dispatch(inscriptionsReaded(inscriptions));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

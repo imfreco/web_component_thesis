@@ -20,7 +20,7 @@ import { ListItemNavigation } from '../components/ListItemNavigation';
 import { InscriptionCreate } from '../containers/InscriptionCreate';
 import { HomeDash } from '../containers/HomeDash';
 import { InscriptionRead } from '../containers/InscriptionRead';
-import { InscriptionDelete } from '../containers/InscriptionDelete';
+import { InscriptionReadMe } from '../containers/InscriptionReadMe';
 
 const drawerWidth = 250;
 
@@ -178,8 +178,8 @@ export default function Dashboard() {
             />
             <Route
               exact
-              path={`${path}/inscription/delete`}
-              component={InscriptionDelete}
+              path={`${path}/inscription/readme`}
+              component={InscriptionReadMe}
             />
             <Route
               exact
