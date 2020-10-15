@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import {
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -8,31 +9,27 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { setTitleNavbar } from '../actions/ui.action';
 import { StyledTableCell, useStyles } from '../hooks/styles/InscriptionRead';
-
-function createData(name, calories) {
-  return { name, calories };
-}
-
-const rows = [
-  createData('06-07-2020', 'INSCRITO'),
-  createData('03-02-2020', 'INSCRITO'),
-  createData('06-07-2019', 'ADMITIDO'),
-  createData('03-02-2019', 'ADMITIDO'),
-  createData('03-02-2018', 'ADMITIDO'),
-];
+import { setTitleNavbar } from '../actions/ui.action';
+import { startInscriptionsRead } from '../actions/inscription.action';
+import { AssignmentTurnedInRounded } from '@material-ui/icons';
 
 export const InscriptionRead = () => {
   const classes = useStyles();
 
+  const { inscriptions } = useSelector((state) => state.inscriptionReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setTitleNavbar('Inscripciones'));
+    dispatch(startInscriptionsRead());
   }, [dispatch]);
+
+  const handleClick = () => {
+    console.log('Admitiendo...');
+  };
 
   return (
     <main className={classes.layout}>
@@ -46,15 +43,21 @@ export const InscriptionRead = () => {
             <TableRow>
               <StyledTableCell>Fecha</StyledTableCell>
               <StyledTableCell>Estado</StyledTableCell>
+              <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.name}>
-                <TableCell component='th' scope='row'>
-                  {row.name}
+            {inscriptions.map(({ id, createdAt, state }) => (
+              <TableRow key={id}>
+                <TableCell>{`${new Date(createdAt).getFullYear()}-${
+                  new Date(createdAt).getMonth() + 1
+                }-${new Date(createdAt).getDate()}`}</TableCell>
+                <TableCell>{state ? 'ADMITIDO' : 'INSCRITO'}</TableCell>
+                <TableCell>
+                  <IconButton aria-label='admitir' onClick={handleClick}>
+                    <AssignmentTurnedInRounded />
+                  </IconButton>
                 </TableCell>
-                <TableCell>{row.calories}</TableCell>
               </TableRow>
             ))}
           </TableBody>

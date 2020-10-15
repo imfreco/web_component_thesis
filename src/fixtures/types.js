@@ -5,4 +5,5 @@ export const types = {
   inscriptionSisbensLoaded: '[Inscription] Sisbens Loaded',
   inscriptionPopulationsLoaded: '[Inscription] Populations Loaded',
   inscriptionCreate: '[Inscription] Inscription Create',
+  inscriptionsReaded: '[Incription] Inscriptions Readed',
 };

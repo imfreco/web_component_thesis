@@ -64,7 +64,6 @@ export const startInscriptionCreate = (data) => {
       const res = await fetchWithoutToken('inscription', data, 'POST');
       const inscription = await res.json();
 
-      console.log(inscription);
       if (inscription.status) {
         Swal.fire({ title: 'Error', text: inscription.message, icon: 'error' });
       } else {
@@ -79,3 +78,29 @@ export const startInscriptionCreate = (data) => {
     }
   };
 };
+
+export const startInscriptionsRead = () => {
+  return async (dispatch) => {
+    try {
+      const res = await fetchWithoutToken('inscription');
+      const inscriptions = await res.json();
+
+      if (inscriptions.status) {
+        Swal.fire({
+          title: 'Error',
+          text: inscriptions.message,
+          icon: 'error',
+        });
+      } else {
+        dispatch(inscriptionsReaded(inscriptions));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+const inscriptionsReaded = (inscriptions) => ({
+  type: types.inscriptionsReaded,
+  payload: inscriptions,
+});
