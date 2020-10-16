@@ -157,3 +157,33 @@ const inscriptionAdmitted = (inscriptionId) => ({
   type: types.inscriptionAdmitted,
   payload: inscriptionId,
 });
+
+export const startIncriptionDelete = (inscriptionId) => {
+  return async (dispatch) => {
+    try {
+      const res = await fetchWithoutToken(
+        `inscription/${inscriptionId}`,
+        {},
+        'DELETE'
+      );
+      const inscription = await res.json();
+
+      if (inscription.status) {
+        Swal.fire({
+          title: 'Error',
+          text: inscription.message,
+          icon: 'error',
+        });
+      } else {
+        dispatch(inscriptionDeleted(inscriptionId));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+const inscriptionDeleted = (inscriptionId) => ({
+  type: types.inscriptionDeleted,
+  payload: inscriptionId,
+});

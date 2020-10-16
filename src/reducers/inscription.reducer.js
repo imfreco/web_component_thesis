@@ -44,6 +44,13 @@ export const inscriptionReducer = (state = initialState, action) => {
           return inscription;
         }),
       };
+    case types.inscriptionDeleted:
+      return {
+        ...state,
+        inscriptions: state.inscriptions.filter(
+          (inscription) => inscription.id !== action.payload
+        ),
+      };
     default:
       return state;
   }

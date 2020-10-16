@@ -13,8 +13,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { StyledTableCell, useStyles } from '../hooks/styles/InscriptionRead';
 import { setTitleNavbar } from '../actions/ui.action';
-import { startInscriptionsReadMe } from '../actions/inscription.action';
-import { AssignmentTurnedInRounded, DeleteRounded } from '@material-ui/icons';
+import {
+  startIncriptionDelete,
+  startInscriptionsReadMe,
+} from '../actions/inscription.action';
+import { DeleteRounded } from '@material-ui/icons';
+import Swal from 'sweetalert2';
 
 export const InscriptionReadMe = () => {
   const classes = useStyles();
@@ -27,12 +31,14 @@ export const InscriptionReadMe = () => {
     dispatch(startInscriptionsReadMe());
   }, [dispatch]);
 
-  const handleAccept = () => {
-    console.log('Aceptando...');
-  };
-
-  const handleDelete = () => {
-    console.log('Eliminando...');
+  const handleDelete = async (inscriptionId) => {
+    const { value } = await Swal.fire({
+      title: 'Responder',
+      text: '¿Acepta eliminar esta incripción?',
+      showCancelButton: true,
+      showConfirmButton: true,
+    });
+    if (value) dispatch(startIncriptionDelete(inscriptionId));
   };
 
   return (
@@ -62,14 +68,12 @@ export const InscriptionReadMe = () => {
                   {state ? 'ADMITIDO' : 'INSCRITO'}
                 </TableCell>
                 <TableCell className={classes.centerContent}>
-                  <IconButton aria-label='eliminar' onClick={handleDelete}>
+                  <IconButton
+                    aria-label='eliminar'
+                    onClick={() => handleDelete(id)}
+                  >
                     <DeleteRounded />
                   </IconButton>
-                  {state && (
-                    <IconButton aria-label='aceptar' onClick={handleAccept}>
-                      <AssignmentTurnedInRounded />
-                    </IconButton>
-                  )}
                 </TableCell>
               </TableRow>
             ))}
