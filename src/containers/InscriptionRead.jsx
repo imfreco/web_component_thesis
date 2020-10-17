@@ -59,11 +59,11 @@ export const InscriptionRead = () => {
           <TableBody>
             {inscriptions.map(({ id, createdAt, state }) => (
               <TableRow key={id}>
-                <TableCell className={classes.centerContent}>{`${new Date(
-                  createdAt
-                ).getFullYear()}-${
-                  new Date(createdAt).getMonth() + 1
-                }-${new Date(createdAt).getDate()}`}</TableCell>
+                <TableCell className={classes.centerContent}>
+                  {`${new Date(createdAt).getFullYear()}-${
+                    new Date(createdAt).getMonth() + 1
+                  }-${new Date(createdAt).getDate()}`}
+                </TableCell>
                 <TableCell className={classes.centerContent}>
                   {state ? 'ADMITIDO' : 'INSCRITO'}
                 </TableCell>

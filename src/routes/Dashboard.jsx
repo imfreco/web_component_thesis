@@ -21,6 +21,7 @@ import { InscriptionCreate } from '../containers/InscriptionCreate';
 import { HomeDash } from '../containers/HomeDash';
 import { InscriptionRead } from '../containers/InscriptionRead';
 import { InscriptionReadMe } from '../containers/InscriptionReadMe';
+import { PlanningComponents } from '../containers/PlanningComponents';
 
 const drawerWidth = 250;
 
@@ -185,6 +186,11 @@ export default function Dashboard() {
               exact
               path={`${path}/inscription/read`}
               component={InscriptionRead}
+            />
+            <Route
+              exact
+              path={`${path}/planning/component`}
+              component={PlanningComponents}
             />
 
             <Redirect to={`${path}/home`} />

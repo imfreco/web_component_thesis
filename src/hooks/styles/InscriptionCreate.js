@@ -30,4 +30,17 @@ export const useStyles = makeStyles((theme) => ({
       backgroundColor: '#4b4b4b',
     },
   },
+  textArea: {
+    fontFamily: theme.typography.fontFamily,
+    backgroundColor: '#e0e0e0',
+    padding: 10,
+    fontSize: 16,
+    border: 'none',
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4,
+    borderBottom: '1px solid #4b4b4b',
+    '&:focus': {
+      outline: 'none',
+    },
+  },
 }));
