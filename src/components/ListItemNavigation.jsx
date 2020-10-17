@@ -3,6 +3,7 @@ import {
   AssignmentIndRounded,
   AssignmentRounded,
   BookmarkRounded,
+  BookRounded,
   DashboardRounded,
   ExitToAppRounded,
 } from '@material-ui/icons';
@@ -36,6 +37,12 @@ export const ListItemNavigation = (
       path='/dashboard/planning/component'
       IconComponent={BookmarkRounded}
     />
+    <ItemNavigation
+      tag='Registrar Menú'
+      path='/dashboard/planning/menu'
+      IconComponent={BookRounded}
+    />
+
     <ItemNavigation
       tag='Cerrar Sesión'
       path=''

@@ -10,4 +10,7 @@ export const types = {
   inscriptionDeleted: '[Incription] Inscription Deleted',
 
   planningComponentCreated: '[Planning] Component Created',
+  planningComponentsReaded: '[Planning] Components Readed',
+  planningMenuDetailAdded: '[Planning] Menu Detail Added',
+  planningMenuDetailDeleted: '[Planning] Menu Detail Deleted',
 };

@@ -22,6 +22,7 @@ import { HomeDash } from '../containers/HomeDash';
 import { InscriptionRead } from '../containers/InscriptionRead';
 import { InscriptionReadMe } from '../containers/InscriptionReadMe';
 import { PlanningComponents } from '../containers/PlanningComponents';
+import PlanningMenus from '../containers/PlanningMenus';
 
 const drawerWidth = 250;
 
@@ -191,6 +192,11 @@ export default function Dashboard() {
               exact
               path={`${path}/planning/component`}
               component={PlanningComponents}
+            />
+            <Route
+              exact
+              path={`${path}/planning/menu`}
+              component={PlanningMenus}
             />
 
             <Redirect to={`${path}/home`} />

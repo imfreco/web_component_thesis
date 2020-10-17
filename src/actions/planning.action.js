@@ -29,3 +29,39 @@ const componentCreated = (component) => ({
   type: types.planningComponentCreated,
   payload: component,
 });
+
+export const startComponentsRead = () => {
+  return async (dispatch) => {
+    try {
+      const res = await fetchWithoutToken(`component`);
+      const components = await res.json();
+
+      if (components.status) {
+        Swal.fire({
+          title: 'Error',
+          text: components.message,
+          icon: 'error',
+        });
+      } else {
+        dispatch(componentsReaded(components));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+const componentsReaded = (components) => ({
+  type: types.planningComponentsReaded,
+  payload: components,
+});
+
+export const menuDetailAdded = (detail) => ({
+  type: types.planningMenuDetailAdded,
+  payload: detail,
+});
+
+export const menuDetailDeleted = (componentId) => ({
+  type: types.planningMenuDetailDeleted,
+  payload: componentId,
+});
