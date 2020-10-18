@@ -13,4 +13,5 @@ export const types = {
   planningComponentsReaded: '[Planning] Components Readed',
   planningMenuDetailAdded: '[Planning] Menu Detail Added',
   planningMenuDetailDeleted: '[Planning] Menu Detail Deleted',
+  planningMenuDetailsReseted: '[Planning] Menu Details Reseted',
 };

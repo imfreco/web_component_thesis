@@ -28,6 +28,7 @@ import {
   menuDetailAdded,
   menuDetailDeleted,
   startComponentsRead,
+  startMenuCreate,
 } from '../actions/planning.action';
 import Swal from 'sweetalert2';
 import { isOnMenuDetails } from '../helpers/validations.helper';
@@ -79,6 +80,33 @@ const PlanningMenus = () => {
 
   const handleDeleteChip = (componentId) => {
     dispatch(menuDetailDeleted(componentId));
+  };
+
+  const handleRegisterMenu = async () => {
+    const { value } = await Swal.fire({
+      title: 'Responder',
+      text: '¿Acepta registrar el menú?',
+      showCancelButton: true,
+      showConfirmButton: true,
+    });
+    if (value) {
+      if (menuDetails.length === components.length)
+        dispatch(
+          startMenuCreate(
+            {
+              date: moment(date._d).format('yyyy-MM-DD'),
+              menuDetails,
+            },
+            reset
+          )
+        );
+      else
+        Swal.fire(
+          'Tenga en cuenta',
+          'Faltan componentes por agregar',
+          'warning'
+        );
+    }
   };
 
   return (
@@ -159,6 +187,7 @@ const PlanningMenus = () => {
                 variant='contained'
                 className={classes.button}
                 startIcon={<CheckCircleRounded />}
+                onClick={handleRegisterMenu}
               >
                 Registrar
               </Button>

@@ -29,6 +29,11 @@ export const planningReducer = (state = initialState, action) => {
           (detail) => detail.componentId !== action.payload
         ),
       };
+    case types.planningMenuDetailsReseted:
+      return {
+        ...state,
+        menuDetails: initialState.menuDetails,
+      };
     default:
       return state;
   }

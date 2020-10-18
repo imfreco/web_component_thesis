@@ -65,3 +65,30 @@ export const menuDetailDeleted = (componentId) => ({
   type: types.planningMenuDetailDeleted,
   payload: componentId,
 });
+
+export const startMenuCreate = (data, reset) => {
+  return async (dispatch) => {
+    try {
+      const res = await fetchWithoutToken(`menu`, data, 'POST');
+      const menu = await res.json();
+
+      if (menu.errors) {
+        Swal.fire({
+          title: 'Error',
+          text: 'La fecha seleccionada ya cuenta con un menú registrado',
+          icon: 'error',
+        });
+      } else {
+        reset();
+        dispatch(menuDetailsReseted());
+        Swal.fire('Correctamente', 'Menu registrado', 'success');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+const menuDetailsReseted = () => ({
+  type: types.planningMenuDetailsReseted,
+});
