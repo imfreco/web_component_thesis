@@ -15,7 +15,7 @@ import {
   Select,
   TextField,
 } from '@material-ui/core';
-import { CheckCircleRounded } from '@material-ui/icons';
+import { AddCircleRounded, CheckCircleRounded } from '@material-ui/icons';
 import MomentUtils from '@date-io/moment';
 import {
   KeyboardDatePicker,
@@ -149,7 +149,7 @@ const PlanningMenus = () => {
               <Button
                 variant='contained'
                 className={classes.button}
-                startIcon={<CheckCircleRounded />}
+                startIcon={<AddCircleRounded />}
                 onClick={handleAddComponent}
               >
                 Agregar componente
