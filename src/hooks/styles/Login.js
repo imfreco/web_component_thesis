@@ -4,8 +4,11 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
+  backDark: {
+    backgroundColor: '#3d3d3d',
+  },
   paper: {
-    margin: theme.spacing(8, 4),
+    margin: theme.spacing(4, 4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -14,7 +17,24 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
+  containerButtonNumber: {
+    textAlign: 'center',
+  },
+  buttonNumber: {
+    margin: 5,
+    backgroundColor: '#3c3c3c',
+    borderRadius: 20,
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#4b4b4b',
+    },
+  },
+  button: {
+    marginTop: 10,
+    backgroundColor: '#3c3c3c',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#4b4b4b',
+    },
   },
 }));

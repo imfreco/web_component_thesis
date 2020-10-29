@@ -6,6 +6,8 @@ import { Avatar, Chip, makeStyles } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: 2,
+    width: 62,
+    backgroundColor: 'white',
   },
 }));
 
