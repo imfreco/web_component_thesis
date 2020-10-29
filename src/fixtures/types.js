@@ -14,4 +14,6 @@ export const types = {
   planningMenuDetailAdded: '[Planning] Menu Detail Added',
   planningMenuDetailDeleted: '[Planning] Menu Detail Deleted',
   planningMenuDetailsReseted: '[Planning] Menu Details Reseted',
+
+  authnDictionaryReaded: '[Authn] Substitution Dictionary Readed',
 };

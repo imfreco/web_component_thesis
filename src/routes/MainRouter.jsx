@@ -7,8 +7,9 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import Dashboard from './Dashboard';
 import { store } from '../store';
+import Dashboard from './Dashboard';
+import { LogIn } from '../containers/LogIn';
 
 export const MainRouter = () => {
   return (
@@ -16,7 +17,7 @@ export const MainRouter = () => {
       <Router>
         <div>
           <Switch>
-            {/* <Route exact path='/auth/login' component={} /> */}
+            <Route exact path='/auth/login' component={LogIn} />
             <Route path='/dashboard' component={Dashboard} />
 
             <Redirect to='/dashboard' />
