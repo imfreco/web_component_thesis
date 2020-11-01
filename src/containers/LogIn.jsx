@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useStyles } from '../hooks/styles/Login';
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   CssBaseline,
   FormControl,
   Grid,
@@ -23,9 +25,13 @@ import {
   VisibilityRounded,
 } from '@material-ui/icons';
 
-import { startDictionaryRead } from '../actions/authentication.action';
-import { ItemDictionary } from '../components/ItemDictionary';
 import { useForm } from '../hooks/useForm';
+import {
+  startDictionaryRead,
+  startLogIn,
+} from '../actions/authentication.action';
+import { startLoading } from '../actions/ui.action';
+import { ItemDictionary } from '../components/ItemDictionary';
 
 export const LogIn = () => {
   const classes = useStyles();
@@ -33,9 +39,12 @@ export const LogIn = () => {
   const {
     dictionary: { alphabet, numbers },
   } = useSelector((state) => state.authenticationReducer);
+  const { showBackdrop } = useSelector((state) => state.uiReducer);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(startLoading());
     dispatch(startDictionaryRead());
   }, [dispatch]);
 
@@ -53,12 +62,16 @@ export const LogIn = () => {
     showNumberKeyboard: false,
   });
 
-  const handleLogin = () => {
-    console.log(formValues);
+  const handleLogIn = () => {
+    dispatch(startLoading());
+    dispatch(startLogIn(email, password));
   };
 
   return (
     <Grid container component='main' className={classes.root}>
+      <Backdrop className={classes.backdrop} open={showBackdrop}>
+        <CircularProgress color='inherit' />
+      </Backdrop>
       <CssBaseline />
       <Grid
         item
@@ -151,7 +164,11 @@ export const LogIn = () => {
               />
             </FormControl>
             {values.showNumberKeyboard && (
-              <Grid container justify='center'>
+              <Grid
+                container
+                justify='center'
+                className={classes.containerNumericKeyboard}
+              >
                 {buttonNumbers.map((number) => (
                   <Grid
                     item
@@ -193,7 +210,7 @@ export const LogIn = () => {
               startIcon={<CheckCircleRounded />}
               className={classes.button}
               fullWidth
-              onClick={handleLogin}
+              onClick={handleLogIn}
             >
               Iniciar Sesión
             </Button>

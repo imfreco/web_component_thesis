@@ -2,6 +2,7 @@ import { types } from '../fixtures/types';
 
 const initialState = {
   titleNavbar: 'Principal',
+  showBackdrop: false,
 };
 
 export const uiReducer = (state = initialState, action) => {
@@ -10,6 +11,16 @@ export const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         titleNavbar: action.payload,
+      };
+    case types.uiStartLoading:
+      return {
+        ...state,
+        showBackdrop: true,
+      };
+    case types.uiStopLoading:
+      return {
+        ...state,
+        showBackdrop: false,
       };
     default:
       return state;

@@ -1,5 +1,7 @@
 export const types = {
   uiSetTitleNavbar: '[UI] Set Title Navbar',
+  uiStartLoading: '[UI] Start Loading',
+  uiStopLoading: '[UI] Stop Loading',
 
   inscriptionAveragesLoaded: '[Inscription] Averages Loaded',
   inscriptionSisbensLoaded: '[Inscription] Sisbens Loaded',
@@ -16,4 +18,5 @@ export const types = {
   planningMenuDetailsReseted: '[Planning] Menu Details Reseted',
 
   authnDictionaryReaded: '[Authn] Substitution Dictionary Readed',
+  authLogIn: '[Authn] Log In',
 };

@@ -4,11 +4,15 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
   backDark: {
     backgroundColor: '#3d3d3d',
   },
   paper: {
-    margin: theme.spacing(4, 4),
+    margin: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -16,6 +20,9 @@ export const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
+  },
+  containerNumericKeyboard: {
+    margin: theme.spacing(4, 0),
   },
   containerButtonNumber: {
     textAlign: 'center',
