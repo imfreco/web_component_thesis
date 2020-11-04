@@ -1,8 +1,11 @@
 import { decode } from 'jsonwebtoken';
-import { fetchWithoutToken } from '../helpers/request.helper';
+
+import { fetchWithoutToken, fetchWithToken } from '../helpers/request.helper';
 import { types } from '../fixtures/types';
+import { items } from '../fixtures/items.store';
 import { sortDictionary } from '../helpers/sort.dictionary.helper';
 import { stopLoading } from './ui.action';
+import Swal from 'sweetalert2';
 
 export const startDictionaryRead = () => {
   return async (dispatch) => {
@@ -25,7 +28,7 @@ const dictionaryReaded = (dictionary, token) => ({
   payload: { dictionary, token },
 });
 
-export const startLogIn = (email, password) => {
+export const startLogIn = (email, password, history) => {
   return async (dispatch, getState) => {
     try {
       const { dict_token } = getState().authenticationReducer;
@@ -36,11 +39,13 @@ export const startLogIn = (email, password) => {
       );
       const body = await res.json();
 
-      console.log(body);
       if (body.message) {
-        console.log(body.message);
+        Swal.fire('Tenga en cuenta', body.message, 'warning');
       } else {
-        dispatch(logIn());
+        const { id_token, refresh_token } = body;
+        const { name, lastname, roles } = decode(id_token);
+        localStorage.setItem(items.refreshToken, refresh_token);
+        dispatch(logIn({ name, lastname, roles, id_token }));
       }
 
       dispatch(stopLoading());
@@ -50,6 +55,38 @@ export const startLogIn = (email, password) => {
   };
 };
 
-const logIn = () => ({
+const logIn = (user) => ({
   type: types.authLogIn,
+  payload: user,
+});
+
+export const startSilentAuthentication = () => {
+  return async (dispatch) => {
+    try {
+      const res = await fetchWithToken(
+        'auth/refresh',
+        {},
+        'GET',
+        localStorage.getItem(items.refreshToken)
+      );
+      const body = await res.json();
+
+      if (body.message) {
+        // Swal.fire('Tenga en cuenta', body.message, 'warning');
+      } else {
+        const { id_token, refresh_token } = body;
+        const { name, lastname, roles } = decode(id_token);
+        localStorage.setItem(items.refreshToken, refresh_token);
+        dispatch(logIn({ name, lastname, roles, id_token }));
+      }
+
+      dispatch(stopLoadingSilentAuth());
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+const stopLoadingSilentAuth = () => ({
+  type: types.authnStopLoading,
 });

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Redirect, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useStyles } from '../hooks/styles/Login';
@@ -34,9 +35,11 @@ import { startLoading } from '../actions/ui.action';
 import { ItemDictionary } from '../components/ItemDictionary';
 
 export const LogIn = () => {
+  const history = useHistory();
   const classes = useStyles();
 
   const {
+    isAuthenticated,
     dictionary: { alphabet, numbers },
   } = useSelector((state) => state.authenticationReducer);
   const { showBackdrop } = useSelector((state) => state.uiReducer);
@@ -64,8 +67,10 @@ export const LogIn = () => {
 
   const handleLogIn = () => {
     dispatch(startLoading());
-    dispatch(startLogIn(email, password));
+    dispatch(startLogIn(email, password, history));
   };
+
+  if (isAuthenticated) return <Redirect to='/dashboard' />;
 
   return (
     <Grid container component='main' className={classes.root}>

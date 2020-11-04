@@ -1,29 +1,52 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
   Redirect,
+  Route,
 } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { store } from '../store';
-import Dashboard from './Dashboard';
+import { startSilentAuthentication } from '../actions/authentication.action';
+import { ProtectedRoute } from './ProtectedRoute';
+import { Dashboard } from './Dashboard';
 import { LogIn } from '../containers/LogIn';
+import { Backdrop, CircularProgress } from '@material-ui/core';
 
 export const MainRouter = () => {
-  return (
-    <Provider store={store}>
-      <Router>
-        <div>
-          <Switch>
-            <Route exact path='/auth/login' component={LogIn} />
-            <Route path='/dashboard' component={Dashboard} />
+  const { isAuthenticated, isLoading } = useSelector(
+    (state) => state.authenticationReducer
+  );
+  const dispatch = useDispatch();
 
-            <Redirect to='/dashboard' />
-          </Switch>
-        </div>
-      </Router>
-    </Provider>
+  useEffect(() => {
+    console.log('authentication silent');
+    dispatch(startSilentAuthentication());
+  }, [dispatch]);
+
+  if (isLoading)
+    return (
+      <Backdrop open={isLoading}>
+        <CircularProgress color='inherit' />
+      </Backdrop>
+    );
+
+  return (
+    <Router>
+      <div>
+        <Switch>
+          <Route exact path='/auth/login' component={LogIn} />
+
+          <ProtectedRoute
+            path='/dashboard'
+            component={Dashboard}
+            isAuthenticated={isAuthenticated}
+            redirect={'/auth/login'}
+          />
+
+          <Redirect to='/auth/login' />
+        </Switch>
+      </div>
+    </Router>
   );
 };

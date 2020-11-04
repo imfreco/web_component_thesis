@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+export function Dashboard() {
   const classes = useStyles();
 
   const { titleNavbar } = useSelector((state) => state.uiReducer);
