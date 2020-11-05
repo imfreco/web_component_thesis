@@ -8,6 +8,7 @@ const initialState = {
   dict_token: '',
   id_token: '',
   user: {
+    id: '',
     name: '',
     lastname: '',
     roles: [],
@@ -37,6 +38,7 @@ export const authenticationReducer = (state = initialState, action) => {
         dict_token: initialState.dict_token,
         id_token: action.payload.id_token,
         user: {
+          id: action.payload.id,
           name: action.payload.name,
           lastname: action.payload.lastname,
           roles: [...action.payload.roles],

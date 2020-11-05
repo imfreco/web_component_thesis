@@ -43,9 +43,9 @@ export const startLogIn = (email, password, history) => {
         Swal.fire('Tenga en cuenta', body.message, 'warning');
       } else {
         const { id_token, refresh_token } = body;
-        const { name, lastname, roles } = decode(id_token);
+        const { user, name, lastname, roles } = decode(id_token);
         localStorage.setItem(items.refreshToken, refresh_token);
-        dispatch(logIn({ name, lastname, roles, id_token }));
+        dispatch(logIn({ id: user, name, lastname, roles, id_token }));
       }
 
       dispatch(stopLoading());
@@ -63,21 +63,20 @@ const logIn = (user) => ({
 export const startSilentAuthentication = () => {
   return async (dispatch) => {
     try {
-      const res = await fetchWithToken(
-        'auth/refresh',
-        {},
-        'GET',
-        localStorage.getItem(items.refreshToken)
-      );
-      const body = await res.json();
+      const rt = localStorage.getItem(items.refreshToken);
 
-      if (body.message) {
-        // Swal.fire('Tenga en cuenta', body.message, 'warning');
-      } else {
-        const { id_token, refresh_token } = body;
-        const { name, lastname, roles } = decode(id_token);
-        localStorage.setItem(items.refreshToken, refresh_token);
-        dispatch(logIn({ name, lastname, roles, id_token }));
+      if (rt) {
+        const res = await fetchWithToken('auth/refresh', {}, 'GET', rt);
+        const body = await res.json();
+
+        if (body.message) {
+          Swal.fire('Tenga en cuenta', 'Su sesión ha finalizado', 'warning');
+        } else {
+          const { id_token, refresh_token } = body;
+          const { user, name, lastname, roles } = decode(id_token);
+          localStorage.setItem(items.refreshToken, refresh_token);
+          dispatch(logIn({ id: user, name, lastname, roles, id_token }));
+        }
       }
 
       dispatch(stopLoadingSilentAuth());
