@@ -1,4 +1,7 @@
 import React, { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   IconButton,
   Paper,
@@ -9,21 +12,25 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { AssignmentTurnedInRounded } from '@material-ui/icons';
+import Swal from 'sweetalert2';
 import { StyledTableCell, useStyles } from '../hooks/styles/InscriptionRead';
+
 import { setTitleNavbar } from '../actions/ui.action';
 import {
   startInscriptionAdmit,
   startInscriptionsRead,
 } from '../actions/inscription.action';
-import { AssignmentTurnedInRounded } from '@material-ui/icons';
-import Swal from 'sweetalert2';
+import { isAuthorized } from '../helpers/authorization.helper';
 
 export const InscriptionRead = () => {
   const classes = useStyles();
 
   const { inscriptions } = useSelector((state) => state.inscriptionReducer);
+  const {
+    user: { roles },
+  } = useSelector((state) => state.authenticationReducer);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,6 +47,9 @@ export const InscriptionRead = () => {
     });
     if (value) dispatch(startInscriptionAdmit(inscriptionId));
   };
+
+  if (!isAuthorized(['administrador'], roles))
+    return <Redirect to='/dashboard/home' />;
 
   return (
     <main className={classes.layout}>

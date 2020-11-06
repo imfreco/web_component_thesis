@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Button,
@@ -10,15 +11,20 @@ import {
   TextField,
 } from '@material-ui/core';
 import { CheckCircleRounded } from '@material-ui/icons';
-import { useStyles } from '../hooks/styles/InscriptionCreate';
 import Swal from 'sweetalert2';
+import { useStyles } from '../hooks/styles/InscriptionCreate';
 
 import { useForm } from '../hooks/useForm';
 import { setTitleNavbar } from '../actions/ui.action';
 import { startComponentCreate } from '../actions/planning.action';
+import { isAuthorized } from '../helpers/authorization.helper';
 
 export const PlanningComponents = () => {
   const classes = useStyles();
+
+  const {
+    user: { roles },
+  } = useSelector((state) => state.authenticationReducer);
 
   const dispatch = useDispatch();
 
@@ -43,6 +49,9 @@ export const PlanningComponents = () => {
     });
     if (value) dispatch(startComponentCreate(formValues, reset));
   };
+
+  if (!isAuthorized(['nutricionista', 'administrador'], roles))
+    return <Redirect to='/dashboard/home' />;
 
   return (
     <main className={classes.layout}>

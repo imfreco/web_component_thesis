@@ -1,4 +1,7 @@
 import React, { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   Button,
   FormControl,
@@ -9,9 +12,9 @@ import {
   Select,
 } from '@material-ui/core';
 import { CheckCircleRounded } from '@material-ui/icons';
-import { useDispatch, useSelector } from 'react-redux';
-
+import Swal from 'sweetalert2';
 import { useStyles } from '../hooks/styles/InscriptionCreate';
+
 import { setTitleNavbar } from '../actions/ui.action';
 import {
   startAveragesLoaded,
@@ -20,7 +23,7 @@ import {
   startSisbensLoaded,
 } from '../actions/inscription.action';
 import { useForm } from '../hooks/useForm';
-import Swal from 'sweetalert2';
+import { isAuthorized } from '../helpers/authorization.helper';
 
 export const InscriptionCreate = () => {
   const classes = useStyles();
@@ -28,6 +31,10 @@ export const InscriptionCreate = () => {
   const { averages, sisbens, populations } = useSelector(
     (state) => state.inscriptionReducer
   );
+  const {
+    user: { roles },
+  } = useSelector((state) => state.authenticationReducer);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -55,6 +62,9 @@ export const InscriptionCreate = () => {
     });
     if (value) dispatch(startInscriptionCreate(formValues));
   };
+
+  if (!isAuthorized(['estudiante'], roles))
+    return <Redirect to='/dashboard/home' />;
 
   return (
     <main className={classes.layout}>

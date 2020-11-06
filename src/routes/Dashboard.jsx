@@ -165,7 +165,9 @@ export function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>{ListItemNavigation}</List>
+        <List>
+          <ListItemNavigation />
+        </List>
       </Drawer>
 
       <main className={classes.content}>
@@ -173,26 +175,31 @@ export function Dashboard() {
         <Container maxWidth='lg' className={classes.container}>
           <Switch>
             <Route exact path={`${path}/home`} component={HomeDash} />
+
             <Route
               exact
               path={`${path}/inscription/create`}
               component={InscriptionCreate}
             />
+
             <Route
               exact
               path={`${path}/inscription/readme`}
               component={InscriptionReadMe}
             />
+
             <Route
               exact
               path={`${path}/inscription/read`}
               component={InscriptionRead}
             />
+
             <Route
               exact
               path={`${path}/planning/component`}
               component={PlanningComponents}
             />
+
             <Route
               exact
               path={`${path}/planning/menu`}
