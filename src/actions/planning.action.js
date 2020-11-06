@@ -1,11 +1,13 @@
 import Swal from 'sweetalert2';
 import { types } from '../fixtures/types';
-import { fetchWithoutToken } from '../helpers/request.helper';
+import { fetchWithToken } from '../helpers/request.helper';
 
 export const startComponentCreate = (data, reset) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const res = await fetchWithoutToken(`component`, data, 'POST');
+      const { id_token } = getState().authenticationReducer;
+
+      const res = await fetchWithToken(`component`, data, 'POST', id_token);
       const component = await res.json();
 
       if (component.status) {
@@ -31,9 +33,11 @@ const componentCreated = (component) => ({
 });
 
 export const startComponentsRead = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const res = await fetchWithoutToken(`component`);
+      const { id_token } = getState().authenticationReducer;
+
+      const res = await fetchWithToken(`component`, {}, 'GET', id_token);
       const components = await res.json();
 
       if (components.status) {
@@ -67,9 +71,11 @@ export const menuDetailDeleted = (componentId) => ({
 });
 
 export const startMenuCreate = (data, reset) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const res = await fetchWithoutToken(`menu`, data, 'POST');
+      const { id_token } = getState().authenticationReducer;
+
+      const res = await fetchWithToken(`menu`, data, 'POST', id_token);
       const menu = await res.json();
 
       if (menu.errors) {

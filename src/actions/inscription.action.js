@@ -1,11 +1,12 @@
-import { fetchWithoutToken } from '../helpers/request.helper';
+import { fetchWithToken } from '../helpers/request.helper';
 import { types } from '../fixtures/types';
 import Swal from 'sweetalert2';
 
 export const startAveragesLoaded = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const res = await fetchWithoutToken('average');
+      const { id_token } = getState().authenticationReducer;
+      const res = await fetchWithToken('average', {}, 'GET', id_token);
       const averages = await res.json();
 
       dispatch(averagesLoaded(averages));
@@ -21,9 +22,10 @@ const averagesLoaded = (averages) => ({
 });
 
 export const startSisbensLoaded = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const res = await fetchWithoutToken('sisben');
+      const { id_token } = getState().authenticationReducer;
+      const res = await fetchWithToken('sisben', {}, 'GET', id_token);
       const sisbens = await res.json();
 
       dispatch(sisbensLoaded(sisbens));
@@ -39,9 +41,10 @@ const sisbensLoaded = (sisbens) => ({
 });
 
 export const startPopulationsLoaded = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const res = await fetchWithoutToken('population');
+      const { id_token } = getState().authenticationReducer;
+      const res = await fetchWithToken('population', {}, 'GET', id_token);
       const populations = await res.json();
 
       dispatch(populationLoaded(populations));
@@ -57,11 +60,16 @@ const populationLoaded = (populations) => ({
 });
 
 export const startInscriptionCreate = (data) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      data.userId = 1;
-      // TODO: refactorizar cuando se implemente la autenticación
-      const res = await fetchWithoutToken('inscription', data, 'POST');
+      const {
+        user: { id },
+        id_token,
+      } = getState().authenticationReducer;
+
+      data.userId = id;
+
+      const res = await fetchWithToken('inscription', data, 'POST', id_token);
       const inscription = await res.json();
 
       if (inscription.status) {
@@ -69,7 +77,7 @@ export const startInscriptionCreate = (data) => {
       } else {
         Swal.fire({
           title: 'Correctamente',
-          text: 'Inscription realizada',
+          text: 'Inscripción realizada',
           icon: 'success',
         });
       }
@@ -80,9 +88,10 @@ export const startInscriptionCreate = (data) => {
 };
 
 export const startInscriptionsRead = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const res = await fetchWithoutToken('inscription');
+      const { id_token } = getState().authenticationReducer;
+      const res = await fetchWithToken('inscription', {}, 'GET', id_token);
       const inscriptions = await res.json();
 
       if (inscriptions.status) {
@@ -106,11 +115,19 @@ const inscriptionsReaded = (inscriptions) => ({
 });
 
 export const startInscriptionsReadMe = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const userId = 1;
-      // TODO: refactorizar cuando se implemente la autenticación
-      const res = await fetchWithoutToken(`inscription/${userId}`);
+      const {
+        user: { id },
+        id_token,
+      } = getState().authenticationReducer;
+
+      const res = await fetchWithToken(
+        `inscription/${id}`,
+        {},
+        'GET',
+        id_token
+      );
       const inscriptions = await res.json();
 
       if (inscriptions.status) {
@@ -129,12 +146,14 @@ export const startInscriptionsReadMe = () => {
 };
 
 export const startInscriptionAdmit = (inscriptionId) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const res = await fetchWithoutToken(
+      const { id_token } = getState().authenticationReducer;
+      const res = await fetchWithToken(
         `inscription/admit/${inscriptionId}`,
         { state: 1 },
-        'PATCH'
+        'PATCH',
+        id_token
       );
       const inscription = await res.json();
 
@@ -159,12 +178,14 @@ const inscriptionAdmitted = (inscriptionId) => ({
 });
 
 export const startIncriptionDelete = (inscriptionId) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const res = await fetchWithoutToken(
+      const { id_token } = getState().authenticationReducer;
+      const res = await fetchWithToken(
         `inscription/${inscriptionId}`,
         {},
-        'DELETE'
+        'DELETE',
+        id_token
       );
       const inscription = await res.json();
 
