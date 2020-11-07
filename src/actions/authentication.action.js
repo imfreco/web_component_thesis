@@ -71,6 +71,7 @@ export const startSilentAuthentication = () => {
 
         if (body.message) {
           Swal.fire('Tenga en cuenta', 'Su sesión ha finalizado', 'warning');
+          localStorage.removeItem(items.refreshToken);
         } else {
           const { id_token, refresh_token } = body;
           const { user, name, lastname, roles } = decode(id_token);
