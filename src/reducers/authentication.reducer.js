@@ -28,7 +28,7 @@ export const authenticationReducer = (state = initialState, action) => {
         },
         dict_token: action.payload.token,
       };
-    case types.authLogIn:
+    case types.authnLogIn:
       return {
         ...state,
         dictionary: {
@@ -49,6 +49,13 @@ export const authenticationReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+      };
+    case types.authnLogOut:
+      return {
+        ...state,
+        id_token: initialState.id_token,
+        user: { ...initialState.user },
+        isAuthenticated: false,
       };
     default:
       return state;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   AssignmentIndRounded,
@@ -12,11 +12,15 @@ import {
 
 import { ItemNavigation } from './ItemNavigation';
 import { isAuthorized } from '../helpers/authorization.helper';
+import { startLogOut } from '../actions/authentication.action';
+import Swal from 'sweetalert2';
 
 export const ListItemNavigation = () => {
   const {
     user: { roles },
   } = useSelector((state) => state.authenticationReducer);
+
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -68,7 +72,16 @@ export const ListItemNavigation = () => {
 
       <ItemNavigation
         tag='Cerrar Sesión'
-        path=''
+        path='/auth/login'
+        onClick={async () => {
+          const { value } = await Swal.fire({
+            title: 'Responder',
+            text: '¿Está seguro de finalizar su sesión?',
+            showCancelButton: true,
+            showConfirmButton: true,
+          });
+          if (value) dispatch(startLogOut());
+        }}
         IconComponent={ExitToAppRounded}
       />
     </div>

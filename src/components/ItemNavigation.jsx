@@ -15,12 +15,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ItemNavigation = ({ tag, path, IconComponent }) => {
+export const ItemNavigation = ({ tag, path, onClick, IconComponent }) => {
   const classes = useStyles();
 
   return (
     <Link to={path} className={classes.itemNav}>
-      <ListItem button>
+      <ListItem button onClick={onClick}>
         <ListItemIcon>
           <IconComponent />
         </ListItemIcon>
@@ -33,5 +33,6 @@ export const ItemNavigation = ({ tag, path, IconComponent }) => {
 ItemNavigation.propTypes = {
   tag: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
   IconComponent: PropTypes.object.isRequired,
 };

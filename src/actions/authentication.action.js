@@ -56,7 +56,7 @@ export const startLogIn = (email, password, history) => {
 };
 
 const logIn = (user) => ({
-  type: types.authLogIn,
+  type: types.authnLogIn,
   payload: user,
 });
 
@@ -89,4 +89,24 @@ export const startSilentAuthentication = () => {
 
 const stopLoadingSilentAuth = () => ({
   type: types.authnStopLoading,
+});
+
+export const startLogOut = () => {
+  return async (dispatch) => {
+    try {
+      // const res = await fetchWithToken('auth/signout', {}, 'GET', rt);
+      // const body = await res.json();
+
+      localStorage.removeItem(items.refreshToken);
+      dispatch(logOut());
+
+      dispatch(stopLoading());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+const logOut = () => ({
+  type: types.authnLogOut,
 });

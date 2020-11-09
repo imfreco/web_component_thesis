@@ -18,6 +18,7 @@ export const types = {
   planningMenuDetailsReseted: '[Planning] Menu Details Reseted',
 
   authnDictionaryReaded: '[Authn] Substitution Dictionary Readed',
-  authLogIn: '[Authn] Log In',
+  authnLogIn: '[Authn] Log In',
   authnStopLoading: '[Authn] Stop Loading Silent Authn',
+  authnLogOut: '[Authn] Log Out',
 };
