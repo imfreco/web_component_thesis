@@ -6,10 +6,19 @@ export const startAveragesLoaded = () => {
   return async (dispatch, getState) => {
     try {
       const { id_token } = getState().authenticationReducer;
-      const res = await fetchWithToken('average', {}, 'GET', id_token);
+      const res = await fetchWithToken(
+        'average',
+        {},
+        'GET',
+        id_token,
+        dispatch
+      );
       const averages = await res.json();
 
-      dispatch(averagesLoaded(averages));
+      if (!averages.status) {
+        dispatch(averagesLoaded(averages));
+        dispatch(startSisbensLoaded());
+      }
     } catch (error) {
       console.log(error);
     }
@@ -25,10 +34,13 @@ export const startSisbensLoaded = () => {
   return async (dispatch, getState) => {
     try {
       const { id_token } = getState().authenticationReducer;
-      const res = await fetchWithToken('sisben', {}, 'GET', id_token);
+      const res = await fetchWithToken('sisben', {}, 'GET', id_token, dispatch);
       const sisbens = await res.json();
 
-      dispatch(sisbensLoaded(sisbens));
+      if (!sisbens.status) {
+        dispatch(sisbensLoaded(sisbens));
+        dispatch(startPopulationsLoaded());
+      }
     } catch (error) {
       console.log(error);
     }
@@ -44,10 +56,16 @@ export const startPopulationsLoaded = () => {
   return async (dispatch, getState) => {
     try {
       const { id_token } = getState().authenticationReducer;
-      const res = await fetchWithToken('population', {}, 'GET', id_token);
+      const res = await fetchWithToken(
+        'population',
+        {},
+        'GET',
+        id_token,
+        dispatch
+      );
       const populations = await res.json();
 
-      dispatch(populationLoaded(populations));
+      if (!populations.status) dispatch(populationLoaded(populations));
     } catch (error) {
       console.log(error);
     }
@@ -69,12 +87,16 @@ export const startInscriptionCreate = (data) => {
 
       data.userId = id;
 
-      const res = await fetchWithToken('inscription', data, 'POST', id_token);
+      const res = await fetchWithToken(
+        'inscription',
+        data,
+        'POST',
+        id_token,
+        dispatch
+      );
       const inscription = await res.json();
 
-      if (inscription.status) {
-        Swal.fire({ title: 'Error', text: inscription.message, icon: 'error' });
-      } else {
+      if (!inscription.status) {
         Swal.fire({
           title: 'Correctamente',
           text: 'Inscripción realizada',
@@ -91,18 +113,16 @@ export const startInscriptionsRead = () => {
   return async (dispatch, getState) => {
     try {
       const { id_token } = getState().authenticationReducer;
-      const res = await fetchWithToken('inscription', {}, 'GET', id_token);
+      const res = await fetchWithToken(
+        'inscription',
+        {},
+        'GET',
+        id_token,
+        dispatch
+      );
       const inscriptions = await res.json();
 
-      if (inscriptions.status) {
-        Swal.fire({
-          title: 'Error',
-          text: inscriptions.message,
-          icon: 'error',
-        });
-      } else {
-        dispatch(inscriptionsReaded(inscriptions));
-      }
+      if (!inscriptions.status) dispatch(inscriptionsReaded(inscriptions));
     } catch (error) {
       console.log(error);
     }
@@ -126,19 +146,12 @@ export const startInscriptionsReadMe = () => {
         `inscription/${id}`,
         {},
         'GET',
-        id_token
+        id_token,
+        dispatch
       );
       const inscriptions = await res.json();
 
-      if (inscriptions.status) {
-        Swal.fire({
-          title: 'Error',
-          text: inscriptions.message,
-          icon: 'error',
-        });
-      } else {
-        dispatch(inscriptionsReaded(inscriptions));
-      }
+      if (!inscriptions.status) dispatch(inscriptionsReaded(inscriptions));
     } catch (error) {
       console.log(error);
     }
@@ -153,19 +166,12 @@ export const startInscriptionAdmit = (inscriptionId) => {
         `inscription/admit/${inscriptionId}`,
         { state: 1 },
         'PATCH',
-        id_token
+        id_token,
+        dispatch
       );
       const inscription = await res.json();
 
-      if (inscription.status) {
-        Swal.fire({
-          title: 'Error',
-          text: inscription.message,
-          icon: 'error',
-        });
-      } else {
-        dispatch(inscriptionAdmitted(inscriptionId));
-      }
+      if (!inscription.status) dispatch(inscriptionAdmitted(inscriptionId));
     } catch (error) {
       console.log(error);
     }
@@ -185,19 +191,12 @@ export const startIncriptionDelete = (inscriptionId) => {
         `inscription/${inscriptionId}`,
         {},
         'DELETE',
-        id_token
+        id_token,
+        dispatch
       );
       const inscription = await res.json();
 
-      if (inscription.status) {
-        Swal.fire({
-          title: 'Error',
-          text: inscription.message,
-          icon: 'error',
-        });
-      } else {
-        dispatch(inscriptionDeleted(inscriptionId));
-      }
+      if (!inscription.status) dispatch(inscriptionDeleted(inscriptionId));
     } catch (error) {
       console.log(error);
     }

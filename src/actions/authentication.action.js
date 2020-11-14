@@ -1,6 +1,9 @@
 import { decode } from 'jsonwebtoken';
 
-import { fetchWithoutToken, fetchWithToken } from '../helpers/request.helper';
+import {
+  fetchWithoutToken,
+  fetchProtectedResource,
+} from '../helpers/request.helper';
 import { types } from '../fixtures/types';
 import { items } from '../fixtures/items.store';
 import { sortDictionary } from '../helpers/sort.dictionary.helper';
@@ -39,9 +42,14 @@ export const startLogIn = (email, password, history) => {
       );
       const body = await res.json();
 
-      if (body.message) {
-        Swal.fire('Tenga en cuenta', body.message, 'warning');
-      } else {
+      if (body.message === 'El diccionario de sustitución caducó') {
+        Swal.fire(
+          'Tenga en cuenta',
+          'El tiempo de espera excedió, vuelve a intentarlo',
+          'warning'
+        );
+        history.push('/dashboard');
+      } else if (!body.status) {
         const { id_token, refresh_token } = body;
         const { user, name, lastname, roles } = decode(id_token);
         localStorage.setItem(items.refreshToken, refresh_token);
@@ -55,7 +63,7 @@ export const startLogIn = (email, password, history) => {
   };
 };
 
-const logIn = (user) => ({
+export const logIn = (user) => ({
   type: types.authnLogIn,
   payload: user,
 });
@@ -66,13 +74,15 @@ export const startSilentAuthentication = () => {
       const rt = localStorage.getItem(items.refreshToken);
 
       if (rt) {
-        const res = await fetchWithToken('auth/refresh', {}, 'GET', rt);
+        const res = await fetchProtectedResource('auth/refresh', {}, 'GET', rt);
         const body = await res.json();
 
+        console.log(body);
         if (body.message) {
           Swal.fire('Tenga en cuenta', 'Su sesión ha finalizado', 'warning');
           localStorage.removeItem(items.refreshToken);
         } else {
+          // console.log('autenticación silenciosa');
           const { id_token, refresh_token } = body;
           const { user, name, lastname, roles } = decode(id_token);
           localStorage.setItem(items.refreshToken, refresh_token);
@@ -92,21 +102,25 @@ const stopLoadingSilentAuth = () => ({
 });
 
 export const startLogOut = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      // const res = await fetchWithToken('auth/signout', {}, 'GET', rt);
-      // const body = await res.json();
+      const {
+        user: { id },
+      } = getState().authenticationReducer;
 
-      localStorage.removeItem(items.refreshToken);
-      dispatch(logOut());
+      const res = await fetchWithoutToken(`auth/signout/${id}`, {}, 'PATCH');
+      const body = await res.json();
 
-      dispatch(stopLoading());
+      if (!body.status) {
+        localStorage.removeItem(items.refreshToken);
+        dispatch(logOut());
+      }
     } catch (error) {
       console.log(error);
     }
   };
 };
 
-const logOut = () => ({
+export const logOut = () => ({
   type: types.authnLogOut,
 });

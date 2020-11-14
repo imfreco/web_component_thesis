@@ -19,8 +19,6 @@ import { setTitleNavbar } from '../actions/ui.action';
 import {
   startAveragesLoaded,
   startInscriptionCreate,
-  startPopulationsLoaded,
-  startSisbensLoaded,
 } from '../actions/inscription.action';
 import { useForm } from '../hooks/useForm';
 import { isAuthorized } from '../helpers/authorization.helper';
@@ -39,8 +37,6 @@ export const InscriptionCreate = () => {
 
   useEffect(() => {
     dispatch(startAveragesLoaded());
-    dispatch(startSisbensLoaded());
-    dispatch(startPopulationsLoaded());
     dispatch(setTitleNavbar('Realizar Inscripción'));
   }, [dispatch]);
 

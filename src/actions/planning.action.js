@@ -7,16 +7,16 @@ export const startComponentCreate = (data, reset) => {
     try {
       const { id_token } = getState().authenticationReducer;
 
-      const res = await fetchWithToken(`component`, data, 'POST', id_token);
+      const res = await fetchWithToken(
+        `component`,
+        data,
+        'POST',
+        id_token,
+        dispatch
+      );
       const component = await res.json();
 
-      if (component.status) {
-        Swal.fire({
-          title: 'Error',
-          text: component.message,
-          icon: 'error',
-        });
-      } else {
+      if (!component.status) {
         dispatch(componentCreated(component));
         reset();
         Swal.fire('Correctamente', 'Componente registrado', 'success');
@@ -37,18 +37,16 @@ export const startComponentsRead = () => {
     try {
       const { id_token } = getState().authenticationReducer;
 
-      const res = await fetchWithToken(`component`, {}, 'GET', id_token);
+      const res = await fetchWithToken(
+        `component`,
+        {},
+        'GET',
+        id_token,
+        dispatch
+      );
       const components = await res.json();
 
-      if (components.status) {
-        Swal.fire({
-          title: 'Error',
-          text: components.message,
-          icon: 'error',
-        });
-      } else {
-        dispatch(componentsReaded(components));
-      }
+      if (!components.status) dispatch(componentsReaded(components));
     } catch (error) {
       console.log(error);
     }
@@ -75,19 +73,27 @@ export const startMenuCreate = (data, reset) => {
     try {
       const { id_token } = getState().authenticationReducer;
 
-      const res = await fetchWithToken(`menu`, data, 'POST', id_token);
+      const res = await fetchWithToken(
+        `menu`,
+        data,
+        'POST',
+        id_token,
+        dispatch
+      );
       const menu = await res.json();
 
-      if (menu.errors) {
-        Swal.fire({
-          title: 'Error',
-          text: 'La fecha seleccionada ya cuenta con un menú registrado',
-          icon: 'error',
-        });
-      } else {
-        reset();
-        dispatch(menuDetailsReseted());
-        Swal.fire('Correctamente', 'Menu registrado', 'success');
+      if (!menu.status) {
+        if (menu.errors) {
+          Swal.fire({
+            title: 'Error',
+            text: 'La fecha seleccionada ya cuenta con un menú registrado',
+            icon: 'error',
+          });
+        } else {
+          reset();
+          dispatch(menuDetailsReseted());
+          Swal.fire('Correctamente', 'Menu registrado', 'success');
+        }
       }
     } catch (error) {
       console.log(error);

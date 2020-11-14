@@ -20,7 +20,6 @@ export const MainRouter = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('authentication silent');
     dispatch(startSilentAuthentication());
   }, [dispatch]);
 
