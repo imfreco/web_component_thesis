@@ -42,14 +42,17 @@ export const startLogIn = (email, password, history) => {
       );
       const body = await res.json();
 
-      if (body.message === 'El diccionario de sustitución caducó') {
-        Swal.fire(
-          'Tenga en cuenta',
-          'El tiempo de espera excedió, vuelve a intentarlo',
-          'warning'
-        );
-        history.push('/dashboard');
-      } else if (!body.status) {
+      if (body.message) {
+        if (typeof body.message === 'object') {
+          if (body.message.email)
+            Swal.fire('Tenga en cuenta', body.message.email.msg, 'warning');
+          if (body.message.password)
+            Swal.fire('Tenga en cuenta', body.message.password.msg, 'warning');
+        } else {
+          Swal.fire('Tenga en cuenta', body.message, 'warning');
+          history.push('/dashboard');
+        }
+      } else {
         const { id_token, refresh_token } = body;
         const { user, name, lastname, roles } = decode(id_token);
         localStorage.setItem(items.refreshToken, refresh_token);
