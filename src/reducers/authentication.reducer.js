@@ -26,7 +26,7 @@ export const authenticationReducer = (state = initialState, action) => {
           alphabet: [...action.payload.dictionary.alphabet],
           numbers: [...action.payload.dictionary.numbers],
         },
-        dict_token: action.payload.token,
+        dict_token: action.payload.dict_token,
       };
     case types.authnLogIn:
       return {
