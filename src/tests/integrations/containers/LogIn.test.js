@@ -38,8 +38,8 @@ const initState = {
 const store = mockStore(initState);
 store.dispatch = jest.fn();
 
-describe('Pruebas de integración en el módulo de autenticación', () => {
-  test('CP - Debería ...', () => {
+describe('Pruebas de integración en el componente de autenticación', () => {
+  test('CP17 - Debería actuar el <LogIn/> según el estado global', () => {
     const wrapper = mount(
       <Provider store={store}>
         <LogIn />

@@ -35,12 +35,12 @@ const create = (currentState) => {
 Storage.prototype.setItem = jest.fn();
 Storage.prototype.getItem = jest.fn();
 
-describe('Pruebas unitarias en las acciones de autenticación', () => {
+describe('Pruebas unitarias en los middlewares de autenticación', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test('CP12 - Debería ...', async () => {
+  test('CP12 - Debería realizar correctamente el proceso de autenticación inicial', async () => {
     const dict_token = 'lp';
     const id_token = 'acdc';
     const refresh_token = 'hbk';
@@ -89,40 +89,7 @@ describe('Pruebas unitarias en las acciones de autenticación', () => {
     expect(store.dispatch).toHaveBeenCalledWith({ type: types.uiStopLoading });
   });
 
-  test('CP14 - Debería ...', async () => {
-    const dict_token = 'lorem';
-    const dictionary = {};
-    const sortedDict = { alphabet: [], numbers: [] };
-
-    const { store, invoke } = create({});
-
-    fetchModule.fetchWithoutToken = jest.fn(() => ({
-      json: () => ({ dict_token }),
-    }));
-
-    jwt.decode = jest.fn(() => ({ dictionary }));
-
-    dictionaryModule.sortDictionary = jest.fn(() => sortedDict);
-
-    await invoke(startDictionaryRead());
-
-    expect(store.getState).not.toHaveBeenCalled();
-    expect(fetchModule.fetchWithoutToken).toHaveBeenCalledWith(
-      'auth/substitution'
-    );
-    expect(jwt.decode).toHaveBeenCalledWith(dict_token);
-    expect(dictionaryModule.sortDictionary).toHaveBeenCalledWith(dictionary);
-    expect(store.dispatch).toHaveBeenCalledTimes(2);
-    expect(store.dispatch).toHaveBeenCalledWith({
-      type: types.authnDictionaryReaded,
-      payload: { dict_token, dictionary: sortedDict },
-    });
-    expect(store.dispatch).toHaveBeenCalledWith({
-      type: types.uiStopLoading,
-    });
-  });
-
-  test('CP15 - Debería ...', async () => {
+  test('CP13 - Debería realizar correctamente el proceso de autenticación silenciosa', async () => {
     const refresh_token = 'edm';
     const new_id_token = 'dto';
     const new_refresh_token = 'mrt';
@@ -172,7 +139,40 @@ describe('Pruebas unitarias en las acciones de autenticación', () => {
     });
   });
 
-  test('CP16 - Debería ...', async () => {
+  test('CP14 - Debería realizar correctamente el proceso de generación del diccionario ...', async () => {
+    const dict_token = 'lorem';
+    const dictionary = {};
+    const sortedDict = { alphabet: [], numbers: [] };
+
+    const { store, invoke } = create({});
+
+    fetchModule.fetchWithoutToken = jest.fn(() => ({
+      json: () => ({ dict_token }),
+    }));
+
+    jwt.decode = jest.fn(() => ({ dictionary }));
+
+    dictionaryModule.sortDictionary = jest.fn(() => sortedDict);
+
+    await invoke(startDictionaryRead());
+
+    expect(store.getState).not.toHaveBeenCalled();
+    expect(fetchModule.fetchWithoutToken).toHaveBeenCalledWith(
+      'auth/substitution'
+    );
+    expect(jwt.decode).toHaveBeenCalledWith(dict_token);
+    expect(dictionaryModule.sortDictionary).toHaveBeenCalledWith(dictionary);
+    expect(store.dispatch).toHaveBeenCalledTimes(2);
+    expect(store.dispatch).toHaveBeenCalledWith({
+      type: types.authnDictionaryReaded,
+      payload: { dict_token, dictionary: sortedDict },
+    });
+    expect(store.dispatch).toHaveBeenCalledWith({
+      type: types.uiStopLoading,
+    });
+  });
+
+  test('CP15 - Debería realizar correctamente el proceso de invalidez de autenticación', async () => {
     const id = 1;
 
     const { store, invoke } = create({

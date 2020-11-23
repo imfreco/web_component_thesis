@@ -1,7 +1,7 @@
 const { isAuthorized } = require('../../../helpers/authorization.helper');
 
 describe('Prueba unitaria en utilidad para determinar la autorización', () => {
-  test('CP', () => {
+  test('CP16 - Debería determinar la concesión de autorización según los roles establecidos', () => {
     const rolesRequired = ['Estudiante'];
     const rolesCurrent1 = ['Nutricionista'];
     const rolesCurrent2 = ['Estudiante'];

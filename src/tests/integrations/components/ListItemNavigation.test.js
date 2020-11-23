@@ -13,7 +13,7 @@ const middlewares = [thunk];
 const mockStore = configureStock(middlewares);
 
 describe('Pruebas de integración en el menu lateral', () => {
-  test('CP - Debería ...', () => {
+  test('CP19 - Debería renderizar los items permitidos de <ListItemNavigation/> según el estado global', () => {
     const initState1 = {
       authenticationReducer: { user: { roles: [] } },
     };

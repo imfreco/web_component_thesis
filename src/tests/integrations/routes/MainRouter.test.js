@@ -26,7 +26,7 @@ jest.mock('../../../actions/authentication.action', () => ({
 }));
 
 describe('Prueba de integración sobre el enrutador principal', () => {
-  test('CP - Debería ...', () => {
+  test('CP18 - Debería actuar el <MainRouter/> según el estado global', () => {
     const initState = {
       authenticationReducer: {
         isAuthenticated: false,
