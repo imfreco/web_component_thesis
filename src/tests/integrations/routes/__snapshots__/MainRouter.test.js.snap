@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Prueba de integración sobre el enrutador principal CP - Debería ... 1`] = `
+exports[`Prueba de integración sobre el enrutador principal CP18 - Debería actuar el <MainRouter/> según el estado global 1`] = `
 <div>
   <main
     className="MuiGrid-root makeStyles-root-1 MuiGrid-container"
@@ -105,6 +105,7 @@ exports[`Prueba de integración sobre el enrutador principal CP - Debería ... 1
         >
           <div
             className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
+            data-cy="email"
           >
             <label
               className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
@@ -157,6 +158,7 @@ exports[`Prueba de integración sobre el enrutador principal CP - Debería ... 1
             </label>
             <div
               className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+              data-cy="password"
               onClick={[Function]}
             >
               <input
@@ -243,6 +245,7 @@ exports[`Prueba de integración sobre el enrutador principal CP - Debería ... 1
           </div>
           <button
             className="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-button-9 MuiButton-fullWidth"
+            data-cy="btn-login"
             disabled={false}
             onBlur={[Function]}
             onClick={[Function]}

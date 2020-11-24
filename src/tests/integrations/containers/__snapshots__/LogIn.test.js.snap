@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Pruebas de integración en el módulo de autenticación CP - Debería ... 1`] = `
+exports[`Pruebas de integración en el componente de autenticación CP17 - Debería actuar el <LogIn/> según el estado global 1`] = `
 <main
   className="MuiGrid-root makeStyles-root-1 MuiGrid-container"
 >
@@ -104,6 +104,7 @@ exports[`Pruebas de integración en el módulo de autenticación CP - Debería .
       >
         <div
           className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
+          data-cy="email"
         >
           <label
             className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
@@ -156,6 +157,7 @@ exports[`Pruebas de integración en el módulo de autenticación CP - Debería .
           </label>
           <div
             className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+            data-cy="password"
             onClick={[Function]}
           >
             <input
@@ -242,6 +244,7 @@ exports[`Pruebas de integración en el módulo de autenticación CP - Debería .
         </div>
         <button
           className="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-button-9 MuiButton-fullWidth"
+          data-cy="btn-login"
           disabled={false}
           onBlur={[Function]}
           onClick={[Function]}

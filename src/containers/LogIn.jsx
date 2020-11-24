@@ -120,6 +120,7 @@ export const LogIn = () => {
               variant='outlined'
               margin='normal'
               fullWidth
+              data-cy='email'
               label='Correo'
               name='email'
               value={email}
@@ -138,6 +139,7 @@ export const LogIn = () => {
               <OutlinedInput
                 id='outlined-adornment-password'
                 type={values.showPassword ? 'text' : 'password'}
+                data-cy='password'
                 value={password}
                 endAdornment={
                   <InputAdornment position='end'>
@@ -183,6 +185,7 @@ export const LogIn = () => {
                   >
                     <Button
                       variant='contained'
+                      data-cy={`nk-btn-${number}`}
                       className={classes.buttonNumber}
                       onClick={() => {
                         const value = `${password}${number}`;
@@ -215,6 +218,7 @@ export const LogIn = () => {
               startIcon={<CheckCircleRounded />}
               className={classes.button}
               fullWidth
+              data-cy='btn-login'
               onClick={handleLogIn}
             >
               Iniciar Sesión
