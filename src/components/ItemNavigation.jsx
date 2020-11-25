@@ -15,13 +15,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ItemNavigation = ({ tag, path, onClick, IconComponent }) => {
+export const ItemNavigation = ({
+  tag,
+  path,
+  onClick,
+  IconComponent,
+  ...rest
+}) => {
   const classes = useStyles();
 
   return (
     <Link to={path} className={classes.itemNav}>
       <ListItem button onClick={onClick}>
-        <ListItemIcon>
+        <ListItemIcon {...rest}>
           <IconComponent />
         </ListItemIcon>
         <ListItemText primary={tag} />

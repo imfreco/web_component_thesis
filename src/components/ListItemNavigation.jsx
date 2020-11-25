@@ -32,6 +32,7 @@ export const ListItemNavigation = () => {
 
       {isAuthorized(['estudiante'], roles) && (
         <ItemNavigation
+          data-cy='item-make-inscription'
           tag='Realizar Inscripción'
           path='/dashboard/inscription/create'
           IconComponent={AssignmentIndRounded}
@@ -40,6 +41,7 @@ export const ListItemNavigation = () => {
 
       {isAuthorized(['estudiante'], roles) && (
         <ItemNavigation
+          data-cy='item-read-inscriptionme'
           tag='Mis Inscripciones'
           path='/dashboard/inscription/readme'
           IconComponent={AssignmentRounded}
@@ -48,6 +50,7 @@ export const ListItemNavigation = () => {
 
       {isAuthorized(['administrador'], roles) && (
         <ItemNavigation
+          data-cy='item-read-inscription'
           tag='Inscripciones'
           path='/dashboard/inscription/read'
           IconComponent={AssignmentRounded}
@@ -56,6 +59,7 @@ export const ListItemNavigation = () => {
 
       {isAuthorized(['nutricionista', 'administrador'], roles) && (
         <ItemNavigation
+          data-cy='item-component-planning'
           tag='Registrar Componente'
           path='/dashboard/planning/component'
           IconComponent={BookmarkRounded}
@@ -64,6 +68,7 @@ export const ListItemNavigation = () => {
 
       {isAuthorized(['nutricionista', 'administrador'], roles) && (
         <ItemNavigation
+          data-cy='item-menu-planning'
           tag='Registrar Menú'
           path='/dashboard/planning/menu'
           IconComponent={BookRounded}

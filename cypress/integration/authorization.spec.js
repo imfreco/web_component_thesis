@@ -1,13 +1,13 @@
 const { decode } = require('jsonwebtoken');
 const { replacePassword } = require('../utils/replace.password.util');
 
-describe('Pruebas de aceptación para el flujo de autenticación', () => {
+describe('Pruebas de aceptación del requerimiento de autorización', () => {
   beforeEach(() => {
     cy.fixture('user').as('userData');
     cy.visit('/auth/login');
   });
 
-  it('CP - Debería realizar el flujo de autenticación correctamente', () => {
+  it('CP - Debería realizar el flujo de autorización correctamente', () => {
     cy.wait(1000); // time for get dictionary
 
     cy.window()
@@ -16,9 +16,7 @@ describe('Pruebas de aceptación para el flujo de autenticación', () => {
       .then((state) => {
         cy.get('@userData').then((userData) => {
           cy.getBySel('email').type(userData.email);
-          cy.getBySel('password')
-            .type(userData.password)
-            .should('have.value', '');
+          cy.getBySel('password').type(userData.password);
 
           const { dictionary } = decode(state.authenticationReducer.dict_token);
           const password = replacePassword(dictionary, userData.password);
@@ -27,8 +25,6 @@ describe('Pruebas de aceptación para el flujo de autenticación', () => {
             cy.getBySel(`nk-btn-${p}`).click();
           }
 
-          // cy.getBySel('password').should('have.value', password);
-
           cy.getBySel('btn-login').click();
 
           cy.wait(4000);
@@ -36,19 +32,23 @@ describe('Pruebas de aceptación para el flujo de autenticación', () => {
           cy.url().should('include', '/dashboard');
           cy.url().should('include', '/dashboard/home');
 
-          cy.getBySel('item-make-inscription').click();
-          cy.url().should('include', '/dashboard/inscription/create');
+          cy.wait(1000);
 
-          cy.wait(15500); // test of id_token lifetime
+          // go to route not authorized
+          cy.visit('/dashboard/inscription/read');
+          cy.url().should('include', '/dashboard/home');
 
-          cy.getBySel('item-read-inscriptionme').click();
+          cy.wait(1000);
+
+          // go to authorized route
+          cy.visit('/dashboard/inscription/readme');
           cy.url().should('include', '/dashboard/inscription/readme');
 
-          cy.wait(30500); // test of refresh_token lifetime, so, end session
+          cy.wait(1000);
 
-          cy.getBySel('item-make-inscription').click();
-          cy.url().should('include', '/auth/login');
-          cy.get('.swal2-popup').should('be.visible');
+          // go to route not authorized
+          cy.visit('/dashboard/planning/component');
+          cy.url().should('include', '/dashboard/home');
         });
       });
   });
