@@ -7,7 +7,7 @@ describe('Pruebas de aceptación del requerimiento de autorización', () => {
     cy.visit('/auth/login');
   });
 
-  it('CP - Debería realizar el flujo de autorización correctamente', () => {
+  it('CP21 - Debería realizar el flujo de autorización correctamente', () => {
     cy.wait(1000); // time for get dictionary
 
     cy.window()

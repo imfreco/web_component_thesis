@@ -7,7 +7,7 @@ describe('Pruebas de aceptación para el flujo de autenticación', () => {
     cy.visit('/auth/login');
   });
 
-  it('CP - Debería realizar el flujo de autenticación correctamente', () => {
+  it('CP20 - Debería realizar el flujo de autenticación correctamente', () => {
     cy.wait(1000); // time for get dictionary
 
     cy.window()
